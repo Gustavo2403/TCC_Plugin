@@ -23,22 +23,18 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- function local_greetings_get_greeting($user) {
+function local_greetings_get_greeting($user) {
     if ($user == null) {
         return get_string('greetinguser', 'local_greetings');
     }
 
-    // Verificar se $user é um objeto
     if (!is_object($user)) {
-        // Tratar o caso em que $user não é um objeto
         return get_string('greetinguser', 'local_greetings');
     }
 
-    // Verificar se a propriedade "country" está presente no objeto $user
     if (property_exists($user, 'country')) {
         $country = $user->country;
     } else {
-        // Tratar o caso em que a propriedade "country" não está presente
         return get_string('greetinguser', 'local_greetings');
     }
 
@@ -48,7 +44,7 @@
             break;
         case 'BR':
             $langstr = 'greetinguserbr';
-        break;
+            break;
         default:
             $langstr = 'greetingloggedinuser';
             break;
@@ -56,3 +52,12 @@
 
     return get_string($langstr, 'local_greetings', fullname($user));
 }
+
+function local_greetings_extend_navigation_frontpage(navigation_node $frontpage) {
+    $frontpage->add(
+        get_string('pluginname', 'local_greetings'),
+        new moodle_url('/local/greetings/index.php'),
+        navigation_node::TYPE_CUSTOM
+    );
+}
+

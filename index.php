@@ -1,49 +1,50 @@
 <?php
-// Este arquivo faz parte do Moodle - https://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
-// Moodle é um software livre: você pode redistribuí-lo e/ou modificá-lo
- // sob os termos da Licença Pública Geral GNU como publicado pela
-// Free Software Foundation, seja a versão 3 da Licença, ou
-// (a seu critério) qualquer versão posterior.
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
-// O Moodle é distribuído na esperança de que seja útil,
-// mas SEM QUALQUER GARANTIA; sem mesmo a garantia implícita de
-// COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM DETERMINADO FIM. Veja a
-// Licença Pública Geral GNU para mais detalhes.
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
 //
-// Você deve ter recebido uma cópia da Licença Pública Geral GNU
-// junto com o Moodle. Caso contrário, consulte < https://www.gnu.org/licenses/> ;.
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
+ * Plugin strings are defined here.
+ *
  * @package     local_greetings
+ * @category    string
  * @copyright   2024 Gustavo <gustavormoreiraflamengo@gmail.com>
- * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 ou posterior
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 require_once('../../config.php');
-require_once($CFG->dirroot. '/local/greetings/lib.php');
+require_once($CFG->dirroot . '/local/greetings/lib.php');
+require_login();
 
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/greetings/index.php'));
 $PAGE->set_pagelayout('standard');
 
-// Configurar título e cabeçalho
 $pluginname = "Notificações";
 $PAGE->set_title($pluginname);
 $PAGE->set_heading($pluginname);
 
 echo $OUTPUT->header();
 
-// Obter o nome do site
 $site = get_site();
 $sitefullname = $site->fullname;
 
-// Verificar se o usuário está logado
 if (isloggedin()) {
     $username = $USER;
     echo local_greetings_get_greeting($username);
 } else {
-    // Se não, exibir saudação genérica
     echo get_string('greetinguser', 'local_greetings');
 }
 
