@@ -23,15 +23,17 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Saudações';
-$string['greetinguser'] = 'Bem-vindo, usuário.';
-$string['greetingloggedinuser'] = 'Bem-vindo, {$a}.';
-$string['greetinguserau'] = 'Olá, {$a}.';
-$string['greetinguseres'] = 'Olá, {$a}.';
-$string['greetinguserbr'] = 'Bem-Vindo, {$a}.';
-$string['greetinguserfj'] = 'Bula, {$a}.';
-$string['greetingusernz'] = 'Kia Ora, {$a}.';
-$string['greetinguserin'] = 'Hello, {$a}.';
-$string['yourmessage'] = 'Your message';
+namespace local_greetings\form;
+
+defined('MOODLE_INTERNAL') || die();
+require_once($CFG->libdir . '/formslib.php');
+class message_form extends \moodleform {
+    public function definition() {
+        $mform = $this->_form;
+        $mform->addElement('textarea', 'message', get_string('yourmessage', 'local_greetings'));
+        $mform->setType('message', PARAM_TEXT);
+        $submitlabel = get_string('submit');
+        $mform->addElement('submit', 'submitmessage', $submitlabel);
+    }
+}

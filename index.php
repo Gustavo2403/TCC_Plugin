@@ -36,6 +36,8 @@ $pluginname = "Notificações";
 $PAGE->set_title($pluginname);
 $PAGE->set_heading($pluginname);
 
+$messageform = new \local_greetings\form\message_form();
+
 echo $OUTPUT->header();
 
 $site = get_site();
@@ -48,4 +50,10 @@ if (isloggedin()) {
     echo get_string('greetinguser', 'local_greetings');
 }
 
+$messageform->display();
+
+if ($data = $messageform->get_data()) {
+    $message = required_param('message', PARAM_TEXT);
+    echo $OUTPUT->heading($message, 4);
+}
 echo $OUTPUT->footer();
